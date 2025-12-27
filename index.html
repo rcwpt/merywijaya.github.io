@@ -1,365 +1,534 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tata Ibadah Pernikahan - Wijaya</title>
+    <title>Wedding of Wijaya & Mery</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Playfair Display (Elegant) & Lato (Clean) -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
+        /* Custom Styles & Animations */
         body {
             font-family: 'Lato', sans-serif;
-            background-color: #fcfbf9; /* Warm off-white */
-            color: #44403c;
+            background-color: #FDF4F5; /* Soft Pink tint */
+            color: #44403C;
         }
         h1, h2, h3, .font-serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', serif;
         }
-        .pattern-bg {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d6d3d1' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        .font-script {
+            font-family: 'Great Vibes', cursive;
         }
-        /* Smooth detail opening */
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* === 1. ANIMASI JUDUL (SHIMMER EFFECT) === */
+        .text-shimmer {
+            background: linear-gradient(
+                to right, 
+                #fde68a 20%, 
+                #fcd34d 40%, 
+                #fffbeb 50%, 
+                #fcd34d 60%, 
+                #fde68a 80%
+            );
+            background-size: 200% auto;
+            color: #fbbf24; /* Fallback */
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+            /* Fix clipping for script fonts with gradients */
+            padding-right: 0.1em; 
+            padding-bottom: 0.1em;
+        }
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Dropdown Animation */
         details > summary {
             list-style: none;
         }
         details > summary::-webkit-details-marker {
             display: none;
         }
-        details[open] summary ~ * {
-            animation: sweep .3s ease-in-out;
+        details[open] summary .chevron-icon {
+            transform: rotate(180deg);
         }
-        @keyframes sweep {
-            0%    {opacity: 0; transform: translateY(-10px)}
-            100%  {opacity: 1; transform: translateY(0)}
+        details[open] summary ~ * {
+            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-10px); max-height: 0; }
+            100% { opacity: 1; transform: translateY(0); max-height: 500px; }
+        }
+        
+        /* Subtle Background Pattern */
+        .bg-pattern {
+            background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Floating Blobs for Color */
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: 0;
+            opacity: 0.4;
+            border-radius: 50%;
         }
     </style>
 </head>
-<body class="pattern-bg min-h-screen flex flex-col items-center py-10 px-4">
+<body class="bg-pattern min-h-screen flex justify-center selection:bg-rose-200">
 
-    <!-- Main Container -->
-    <main class="w-full max-w-lg bg-white shadow-xl rounded-t-full rounded-b-3xl overflow-hidden border border-stone-100">
+    <!-- Mobile Container -->
+    <main class="w-full max-w-md bg-white/90 backdrop-blur-sm min-h-screen shadow-2xl relative overflow-hidden flex flex-col border-x border-white">
         
-        <!-- Header / Hero Section -->
-        <div class="relative bg-stone-100 pt-24 pb-12 px-6 text-center border-b border-stone-200">
-            <div class="absolute top-8 left-1/2 transform -translate-x-1/2">
-                <i data-lucide="church" class="w-8 h-8 text-stone-400"></i>
-            </div>
-            
-            <p class="uppercase tracking-[0.2em] text-xs text-stone-500 mb-4">The Wedding Of</p>
-            
-            <h1 class="text-4xl md:text-5xl font-serif text-stone-800 mb-2 italic">
-                Wijaya <br> 
-                <span class="text-2xl not-italic text-stone-400">&</span> <br>
-                <span class="text-amber-700">Mery</span>
-            </h1>
-            
-            <div class="mt-8 flex justify-center items-center gap-2 text-stone-600 text-sm">
-                <i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i>
-                <span>Minggu, 28 Desember 2025</span>
-            </div>
-            <div class="mt-2 flex justify-center items-center gap-2 text-stone-600 text-sm">
-                <i data-lucide="map-pin" class="w-4 h-4 text-amber-600"></i>
-                <span>Gereja Baptis Anugerah Pontianak</span>
-            </div>
-        </div>
+        <!-- Decorative Background Blobs inside Main -->
+        <div class="blob bg-rose-300 w-64 h-64 top-20 -left-20 animate-pulse"></div>
+        <div class="blob bg-blue-200 w-64 h-64 bottom-40 -right-20 animate-pulse" style="animation-delay: 2s"></div>
 
-        <!-- Content Area -->
-        <div class="p-6 md:p-8 space-y-10">
+        <!-- === HERO SECTION (Full Height Fix + Gradient) === -->
+        <header class="relative min-h-[100dvh] flex flex-col justify-center items-center text-center px-6 pt-10 pb-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-stone-100 overflow-hidden">
+            
+            <!-- Animated Stars/Particles (CSS only simple representation) -->
+            <div class="absolute inset-0 opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
+            
+            <!-- Glowing Circle behind Title -->
+            <div class="absolute w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-purple-500/20 rounded-full blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
-            <!-- Section 1: Prosesi -->
-            <section>
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="p-2 bg-amber-50 rounded-full text-amber-700">
-                        <i data-lucide="users" class="w-5 h-5"></i>
-                    </div>
-                    <h2 class="text-xl font-serif font-bold text-stone-800 border-b border-amber-200 flex-grow pb-1">Prosesi Masuk</h2>
+            <div class="z-10 flex flex-col items-center justify-center flex-grow w-full max-w-xs space-y-8">
+                <div class="relative py-4">
+                    <p class="font-cinzel tracking-[0.3em] text-[10px] text-amber-200/80 mb-6 uppercase border-b border-amber-500/30 pb-2 inline-block">The Holy Matrimony of</p>
+                    
+                    <!-- ANIMATED TITLE (FIXED CLIPPING) -->
+                    <!-- Added px-4 (horizontal padding) and leading-relaxed to prevent clipping of swashes -->
+                    <h1 class="text-6xl md:text-7xl font-script text-shimmer mb-1 drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)] leading-relaxed px-4 py-2">Wijaya</h1>
+                    <span class="font-serif text-3xl italic text-amber-200/50 my-0 font-light">&</span>
+                    <h1 class="text-6xl md:text-7xl font-script text-shimmer mt-1 drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)] leading-relaxed px-4 py-2">Mery</h1>
                 </div>
-                
-                <ul class="relative border-l-2 border-stone-200 ml-4 pl-6 space-y-4 text-sm text-stone-600">
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        <strong>Musik Pembuka</strong>
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        Pemasangan Lilin
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        Pengantar Orang Tua (Pria & Wanita)
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        Pembawa Cincin, Alkitab & Bunga
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        Pendeta (Menuju Mimbar)
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        <strong>Pengantin Pria</strong> & Pendamping
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-amber-500 border-2 border-amber-500 rounded-full w-3 h-3 top-1.5"></span>
-                        <strong>Pengantin Wanita</strong> diantar Ayah <br>
-                        <span class="text-xs italic text-amber-600">*Jemaat Dimohon Berdiri</span>
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] bg-white border-2 border-stone-200 rounded-full w-3 h-3 top-1.5"></span>
-                        Penyerahan Pengantin Wanita
-                    </li>
-                </ul>
+
+                <!-- Info Card (Glassmorphism + Gradient Border) -->
+                <div class="relative group w-full">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-rose-400 to-amber-400 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                    <div class="relative bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl">
+                        
+                        <!-- Date & Time -->
+                        <div class="flex items-start gap-4 text-left mb-5">
+                            <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-2.5 rounded-xl shadow-lg shadow-amber-500/20">
+                                <i data-lucide="calendar-clock" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-serif text-lg font-bold text-white leading-tight">Minggu, 28 Des 2025</p>
+                                <p class="text-xs text-amber-100/80 mt-1 font-medium">12.30 - 14.00 WIB</p>
+                            </div>
+                        </div>
+
+                        <div class="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent my-4"></div>
+
+                        <!-- Location 1 -->
+                        <div class="flex items-start gap-4 text-left mb-4">
+                            <div class="bg-gradient-to-br from-rose-400 to-pink-500 p-2.5 rounded-xl shadow-lg shadow-rose-500/20">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-rose-200 uppercase tracking-wider mb-0.5 font-bold">Lokasi Pemberkatan</p>
+                                <p class="font-serif text-md leading-snug text-white">Gereja Kasih Karunia<br><span class="text-sm text-stone-300">TBB Pontianak</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Location 2 -->
+                        <div class="flex items-start gap-4 text-left">
+                            <div class="bg-gradient-to-br from-indigo-400 to-blue-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/20">
+                                <i data-lucide="church" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-indigo-200 uppercase tracking-wider mb-0.5 font-bold">Dilayani Oleh</p>
+                                <p class="font-serif text-md leading-snug text-white">Gereja Baptis Anugerah</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 animate-bounce z-10 opacity-60">
+                <i data-lucide="chevrons-down" class="w-6 h-6 text-amber-200 mx-auto drop-shadow-lg"></i>
+            </div>
+            
+            <!-- Curve Bottom -->
+            <div class="absolute bottom-0 left-0 right-0">
+                <svg viewBox="0 0 1440 320" class="w-full h-auto block translate-y-1">
+                    <path fill="#ffffff" fill-opacity="0.9" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+            </div>
+        </header>
+
+        <!-- === CONTENT === -->
+        <div class="px-6 py-4 space-y-14 relative z-20">
+
+            <!-- Verse Quote -->
+            <div class="text-center space-y-4 px-2 py-6 relative">
+                <i data-lucide="quote" class="w-8 h-8 text-rose-300 mx-auto fill-rose-100 transform -scale-x-100"></i>
+                <p class="font-serif italic text-stone-600 text-xl leading-relaxed drop-shadow-sm">
+                    "Dan di atas semuanya itu: kenakanlah kasih, sebagai pengikat yang mempersatukan dan menyempurnakan."
+                </p>
+                <div class="flex items-center justify-center gap-3">
+                    <div class="h-px w-8 bg-rose-300"></div>
+                    <p class="text-xs font-bold text-rose-400 uppercase tracking-widest font-cinzel">Kolose 3:14</p>
+                    <div class="h-px w-8 bg-rose-300"></div>
+                </div>
+            </div>
+
+            <!-- SECTION I: PROSESI -->
+            <section class="relative">
+                <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
+                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-600 rounded-full font-serif text-2xl font-bold shadow-inner">
+                        01
+                    </div>
+                    <div>
+                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Prosesi Masuk</h2>
+                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">The Procession</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-4 space-y-5 border-l-2 border-dashed border-emerald-200 ml-5">
+                    <!-- Item List -->
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-100 border-2 border-emerald-400 group-hover:bg-emerald-400 transition-colors"></div>
+                        <p class="font-bold text-stone-700">Musik Pembuka</p>
+                        <span class="inline-block px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full mt-1 border border-emerald-100 font-medium">Instrument</span>
+                    </div>
+                    
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-stone-300 group-hover:border-emerald-400 transition-colors"></div>
+                        <p class="text-stone-700">Pemasangan Lilin</p>
+                    </div>
+
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-stone-300 group-hover:border-emerald-400 transition-colors"></div>
+                        <p class="text-stone-700">Orang Tua Masuk</p>
+                    </div>
+                    
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-stone-300 group-hover:border-emerald-400 transition-colors"></div>
+                        <p class="text-stone-700">Pendeta Menuju Mimbar</p>
+                    </div>
+
+                    <!-- Highlight: Pengantin -->
+                    <div class="relative pl-6 mt-4">
+                        <div class="bg-gradient-to-r from-emerald-50 to-white p-4 rounded-xl border-l-4 border-emerald-500 shadow-sm mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-emerald-100 p-1.5 rounded-full"><i data-lucide="user" class="w-4 h-4 text-emerald-600"></i></div>
+                                <div>
+                                    <p class="font-bold text-stone-800">Pengantin Pria</p>
+                                    <p class="text-xs text-stone-500">Masuk bersama pendamping</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-emerald-50 to-white p-4 rounded-xl border-l-4 border-emerald-500 shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-emerald-100 p-1.5 rounded-full"><i data-lucide="heart" class="w-4 h-4 text-emerald-600"></i></div>
+                                <div>
+                                    <p class="font-bold text-stone-800">Pengantin Wanita</p>
+                                    <p class="text-xs text-stone-500">Diantar oleh Ayah</p>
+                                </div>
+                            </div>
+                            <div class="mt-2 ml-10 inline-flex items-center gap-1.5 bg-stone-800 text-white text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
+                                <i data-lucide="arrow-up" class="w-3 h-3"></i> Jemaat Dimohon Berdiri
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <!-- Section 2: Ibadah -->
-            <section>
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="p-2 bg-amber-50 rounded-full text-amber-700">
-                        <i data-lucide="music" class="w-5 h-5"></i>
+            <!-- SECTION II: IBADAH -->
+            <section class="relative">
+                 <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
+                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-600 rounded-full font-serif text-2xl font-bold shadow-inner">
+                        02
                     </div>
-                    <h2 class="text-xl font-serif font-bold text-stone-800 border-b border-amber-200 flex-grow pb-1">Ibadah Pembukaan</h2>
+                    <div>
+                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Ibadah Pembukaan</h2>
+                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">Opening Service</p>
+                    </div>
                 </div>
 
-                <div class="space-y-4 text-sm">
-                    <div class="bg-stone-50 p-3 rounded-lg border border-stone-100">
-                        <p class="font-bold text-stone-700">Prelude</p>
-                        <p class="text-stone-500 italic">Instrument</p>
-                    </div>
+                <div class="space-y-4">
+                    
+                    <!-- SONG 1: Pujian Pembuka (Theme: Purple/Music) -->
+                    <details class="group bg-white border border-purple-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-purple-300 transition-all">
+                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-purple-50/50 transition select-none">
+                            <div class="flex-1 pr-4">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                        <i data-lucide="music-2" class="w-3 h-3"></i> Musik
+                                    </div>
+                                    <p class="text-[10px] text-purple-400 font-bold tracking-widest uppercase">Pujian Pembuka</p>
+                                </div>
+                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">NP. 4 Allah Bapa Kami Puja</h3>
+                                <p class="text-[10px] text-stone-400 mt-2 flex items-center gap-1 group-open:hidden animate-pulse">
+                                    Ketuk untuk lirik <i data-lucide="chevrons-down" class="w-3 h-3"></i>
+                                </p>
+                            </div>
+                            <!-- Colorful Arrow Indicator -->
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-purple-50 group-open:bg-gradient-to-br group-open:from-purple-500 group-open:to-fuchsia-600 group-open:text-white text-purple-400 transition-all duration-300 shadow-inner group-open:shadow-lg">
+                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
+                            </div>
+                        </summary>
+                        <div class="bg-purple-50/30 px-6 py-6 border-t border-purple-100 text-sm text-stone-600 leading-relaxed text-center relative">
+                            <p>Allah Bapa kami puja<br>Dan muliakan namaMu!<br>Dalam Kristus Firman Allah<br>Kami anak-anakMu.</p>
+                            <div class="my-4 py-3 bg-white/60 rounded-xl border border-purple-100 shadow-sm">
+                                <p class="font-bold text-purple-700">Reff:<br>Allah Bapa kami puja<br>Dalam pujian merdu! (2x)</p>
+                            </div>
+                            <p>Putra Allah kami puja,<br>Anak Domba yang megah!<br>Korban yang teramat mulia<br>T'lah memb'ri sejahtera.</p>
+                            <br>
+                            <p>Rohulkudus kami puja,<br>Roh Penghibur yang mesra!<br>Roh Penolong yang setia<br>Diutus dari surga.</p>
+                        </div>
+                    </details>
 
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-stone-700">Pujian Bersama</p>
-                            <p class="text-amber-700 font-serif italic">NP. 4 Allah Bapa Kami Puja</p>
+                    <!-- Normal Item (Prayer) -->
+                    <div class="flex items-center gap-4 p-4 border-l-2 border-indigo-200 bg-indigo-50/30 rounded-r-xl ml-1">
+                        <div class="bg-indigo-100 p-2 rounded-full text-indigo-600">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-bold text-stone-800">Doa Pembukaan</p>
+                            <p class="text-sm text-indigo-600 font-medium">Dkn. Handi</p>
                         </div>
                     </div>
 
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-stone-700">Doa Pembukaan</p>
-                            <p class="text-stone-500">Dkn. Handi</p>
+                    <!-- SONG 2: Pujian Bersama (Theme: Blue/Togetherness) -->
+                    <details class="group bg-white border border-blue-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-blue-300 transition-all">
+                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-blue-50/50 transition select-none">
+                            <div class="flex-1 pr-4">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                        <i data-lucide="users" class="w-3 h-3"></i> Bersama
+                                    </div>
+                                    <p class="text-[10px] text-blue-400 font-bold tracking-widest uppercase">Pujian Bersama</p>
+                                </div>
+                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">Cinta Sejati</h3>
+                            </div>
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 group-open:bg-gradient-to-br group-open:from-blue-500 group-open:to-cyan-600 group-open:text-white text-blue-400 transition-all duration-300 shadow-inner group-open:shadow-lg">
+                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
+                            </div>
+                        </summary>
+                        <div class="bg-blue-50/30 px-6 py-6 border-t border-blue-100 text-sm text-stone-600 leading-relaxed text-center">
+                            <p>Saat kurenungkan hidup bersamamu<br>Sering kali ku melupakanmu<br>Berjalan sendiri seakan ku mampu<br>Lalui tanpa kekuatanmu</p>
+                            <div class="my-4 py-3 bg-white/60 rounded-xl border border-blue-100 shadow-sm">
+                                <p class="font-bold text-blue-700">Reff:<br>Namun ada cinta yang tak pernah berlalu<br>Cinta yang kudapat darimu<br>Tlah teruji lalui rentangan sang waktu<br>Kau mati bagiku berkorban untuk diriku</p>
+                            </div>
                         </div>
-                    </div>
+                    </details>
 
-                    <div class="bg-amber-50/50 p-3 rounded-lg border-l-4 border-amber-300">
-                        <p class="font-bold text-stone-700">Pujian Bersama</p>
-                        <p class="text-amber-700 italic">"Cinta Sejati"</p>
-                    </div>
+                    <!-- SONG 3: Persembahan (Theme: Green/Gift) -->
+                    <details class="group bg-white border border-green-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-green-300 transition-all">
+                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-green-50/50 transition select-none">
+                            <div class="flex-1 pr-4">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <div class="bg-gradient-to-r from-emerald-500 to-green-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                        <i data-lucide="gift" class="w-3 h-3"></i> Kolekte
+                                    </div>
+                                    <p class="text-[10px] text-green-500 font-bold tracking-widest uppercase">Persembahan</p>
+                                </div>
+                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">NP. 291 Mari Kumpulkan</h3>
+                            </div>
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-50 group-open:bg-gradient-to-br group-open:from-emerald-500 group-open:to-green-600 group-open:text-white text-green-500 transition-all duration-300 shadow-inner group-open:shadow-lg">
+                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
+                            </div>
+                        </summary>
+                        <div class="bg-green-50/30 px-6 py-6 border-t border-green-100 text-sm text-stone-600 leading-relaxed text-center">
+                            <p>Kita menaburkan biji kebenaran<br>Pada pagi hari, siang, dan petang;<br>Kita menantikan waktu penuaian:<br>Pasti ada hasil, hati pun senang.</p>
+                            <div class="my-4 py-3 bg-white/60 rounded-xl border border-green-100 shadow-sm">
+                                <p class="font-bold text-green-700">Reff:<br>Mari kumpulkan, mari kumpulkan;<br>Pasti ada hasil, hati pun senang (2x)</p>
+                            </div>
+                            <p>Taburkanlah dalam t'rang dan kegelapan,<br>Walaupun bertiup angin yang kencang;<br>Kerja dan usaha akan digenapkan:<br>Pasti ada hasil, hati pun senang.</p>
+                            
+                            <div class="mt-4 p-3 bg-green-100/50 rounded-lg flex items-center justify-center gap-2 text-green-800 text-xs font-bold border border-green-200">
+                                <i data-lucide="user" class="w-3 h-3"></i> Doa Persembahan: Dkn. Adrianus Awan
+                            </div>
+                        </div>
+                    </details>
 
+                     <!-- SONG 4: Pujian Khusus (Theme: Orange/Star) -->
+                    <details class="group bg-white border border-orange-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-orange-300 transition-all">
+                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-orange-50/50 transition select-none">
+                            <div class="flex-1 pr-4">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <div class="bg-gradient-to-r from-orange-400 to-amber-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                        <i data-lucide="star" class="w-3 h-3"></i> Spesial
+                                    </div>
+                                    <p class="text-[10px] text-orange-400 font-bold tracking-widest uppercase">Pujian Khusus</p>
+                                </div>
+                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">Aku Mengasihi Engkau Yesus</h3>
+                            </div>
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-orange-50 group-open:bg-gradient-to-br group-open:from-orange-400 group-open:to-amber-500 group-open:text-white text-orange-400 transition-all duration-300 shadow-inner group-open:shadow-lg">
+                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
+                            </div>
+                        </summary>
+                        <div class="bg-orange-50/30 px-6 py-6 border-t border-orange-100 text-sm text-stone-600 leading-relaxed text-center">
+                            <p>Aku mengasihi Engkau Yesus<br>Dengan segenap hatiku<br>Aku mengasihi Engkau Yesus<br>Dengan segenap jiwaku</p>
+                            <br>
+                            <p>Ku renungkan FirmanMu siang dan malam<br>Ku pegang printahMu dan kulakukan<br>Engkau tahu ya Tuhan tujuan hidupku<br>Hanyalah untuk menyenangkan hatiMu</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- SECTION III: PEMBERKATAN -->
+            <section class="relative">
+                 <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
+                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-rose-100 to-rose-200 text-rose-600 rounded-full font-serif text-2xl font-bold shadow-inner">
+                        03
+                    </div>
                     <div>
-                        <p class="font-bold text-stone-700">Persembahan & Doa</p>
-                        <p class="text-stone-500 mb-1">Pujian: <span class="text-amber-700 italic">NP 291 Mari Kumpulkan</span></p>
-                        <p class="text-stone-500 text-xs">Doa: Dkn. Adrianus Awan</p>
+                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Pemberkatan Nikah</h2>
+                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">Holy Matrimony</p>
                     </div>
+                </div>
 
-                     <div>
-                        <p class="font-bold text-stone-700">Pujian Khusus</p>
-                        <p class="text-amber-700 italic">"Aku Mengasihi Engkau Yesus"</p>
+                <!-- Pastor Info Card -->
+                <div class="relative overflow-hidden bg-gradient-to-br from-slate-800 to-stone-900 text-white p-6 rounded-2xl text-center mb-6 shadow-xl border border-stone-700">
+                    <!-- Background Shine -->
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/30 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500/30 rounded-full blur-3xl"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3 backdrop-blur-sm border border-white/20">
+                            <i data-lucide="book-open" class="w-6 h-6 text-amber-300"></i>
+                        </div>
+                        <p class="text-[10px] uppercase tracking-[0.2em] mb-2 text-stone-400">Pelayan Firman Tuhan</p>
+                        <div class="h-0.5 w-16 bg-amber-500 mx-auto mb-3 rounded-full"></div>
+                        <p class="font-serif text-xl font-bold text-white leading-tight">Pdt. Heldy Panambunan, S.Th., M.Pd</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <!-- Items with custom icons and colors -->
+                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
+                        <div class="bg-amber-100 p-2 rounded-lg text-amber-600 mr-3"><i data-lucide="info" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-medium text-stone-700">Penjelasan Maksud Pernikahan</span>
+                    </div>
+                    
+                    <div class="flex items-center p-3.5 bg-gradient-to-r from-rose-50 to-white border border-rose-200 shadow-md rounded-xl transform scale-[1.02]">
+                        <div class="bg-rose-100 p-2 rounded-lg text-rose-600 mr-3"><i data-lucide="heart-handshake" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-bold text-stone-800">Janji Pernikahan (Vows)</span>
+                    </div>
+                    
+                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
+                        <div class="bg-orange-100 p-2 rounded-lg text-orange-600 mr-3"><i data-lucide="flame" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-medium text-stone-700">Pemasangan Lilin Kesatuan</span>
+                    </div>
+                    
+                    <div class="flex items-center p-3.5 bg-gradient-to-r from-blue-50 to-white border border-blue-200 shadow-md rounded-xl transform scale-[1.02]">
+                        <div class="bg-blue-100 p-2 rounded-lg text-blue-600 mr-3"><i data-lucide="user-check" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-bold text-stone-800">Peneguhan Suami & Istri</span>
+                    </div>
+                    
+                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
+                        <div class="bg-purple-100 p-2 rounded-lg text-purple-600 mr-3"><i data-lucide="unlock" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-medium text-stone-700">Pembukaan Tudung</span>
+                    </div>
+                    
+                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
+                        <div class="bg-pink-100 p-2 rounded-lg text-pink-600 mr-3"><i data-lucide="users" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-medium text-stone-700">Sungkeman (Restu Orang Tua)</span>
+                    </div>
+                    
+                     <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
+                        <div class="bg-teal-100 p-2 rounded-lg text-teal-600 mr-3"><i data-lucide="book" class="w-4 h-4"></i></div>
+                        <span class="text-sm font-medium text-stone-700">Penyerahan Alkitab</span>
                     </div>
                 </div>
             </section>
 
-             <!-- Section 3: Firman & Pemberkatan -->
-            <section>
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="p-2 bg-amber-50 rounded-full text-amber-700">
-                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+             <!-- SECTION IV: PENUTUP -->
+            <section class="relative">
+                 <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
+                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 rounded-full font-serif text-2xl font-bold shadow-inner">
+                        04
                     </div>
-                    <h2 class="text-xl font-serif font-bold text-stone-800 border-b border-amber-200 flex-grow pb-1">Pemberkatan Nikah</h2>
-                </div>
-
-                <div class="bg-white border border-amber-100 shadow-sm rounded-xl p-5 text-center mb-6">
-                    <p class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2">Pelayan Firman</p>
-                    <p class="font-serif text-lg text-stone-800 font-bold">Pdt. Heldy Panambunan, S.Th., M.Pd</p>
-                </div>
-
-                <ul class="space-y-3 text-sm text-stone-600 ml-2">
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span>Penjelasan Maksud Pernikahan</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="heart" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span class="font-bold text-stone-800">Janji Pernikahan</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="flame" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span>Pemasangan Lilin</span>
-                    </li>
-                     <li class="flex items-start gap-2">
-                        <i data-lucide="scroll" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span class="font-bold text-stone-800">Peneguhan Suami/Istri & Doa</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="unlock" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span>Pembukaan Tudung Pengantin</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="users-2" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span>Sungkeman (Doa Restu Orang Tua)</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="book" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span>Penyerahan Alkitab</span>
-                    </li>
-                     <li class="flex items-start gap-2">
-                        <i data-lucide="party-popper" class="w-4 h-4 text-amber-400 mt-0.5"></i>
-                        <span class="italic text-amber-700">Perkenalan Keluarga Baru</span>
-                    </li>
-                </ul>
-            </section>
-
-             <!-- Section 4: Penutup -->
-            <section>
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="p-2 bg-amber-50 rounded-full text-amber-700">
-                        <i data-lucide="sunset" class="w-5 h-5"></i>
-                    </div>
-                    <h2 class="text-xl font-serif font-bold text-stone-800 border-b border-amber-200 flex-grow pb-1">Penutup</h2>
-                </div>
-
-                <div class="space-y-4 text-sm">
                     <div>
-                        <p class="font-bold text-stone-700">Pujian Penutup</p>
-                        <p class="text-amber-700 italic">NP. 164 Naungan Jiwaku</p>
-                    </div>
-                     <div>
-                        <p class="font-bold text-stone-700">Doa Penutup</p>
-                        <p class="text-stone-500">Dkn. Apanto</p>
-                    </div>
-                    <div class="bg-stone-50 p-4 rounded text-center text-stone-500 text-xs italic">
-                        Informasi Keluarga & Ramah Tamah
+                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Penutup</h2>
+                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">Closing</p>
                     </div>
                 </div>
+
+                <!-- SONG 5: Pujian Penutup (Theme: Teal/Blessing) -->
+                <details class="group bg-white border border-teal-100 rounded-2xl shadow-sm overflow-hidden mb-6 hover:shadow-md hover:border-teal-300 transition-all">
+                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-teal-50/50 transition select-none">
+                        <div class="flex-1 pr-4">
+                             <div class="flex items-center gap-2 mb-1.5">
+                                <div class="bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                    <i data-lucide="sunset" class="w-3 h-3"></i> Berkat
+                                </div>
+                                <p class="text-[10px] text-teal-500 font-bold tracking-widest uppercase">Pujian Penutup</p>
+                            </div>
+                            <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">NP. 164 Naungan Jiwaku</h3>
+                        </div>
+                         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-teal-50 group-open:bg-gradient-to-br group-open:from-teal-500 group-open:to-cyan-600 group-open:text-white text-teal-500 transition-all duration-300 shadow-inner group-open:shadow-lg">
+                            <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
+                        </div>
+                    </summary>
+                    <div class="bg-teal-50/30 px-6 py-6 border-t border-teal-100 text-sm text-stone-600 leading-relaxed text-center">
+                        <p>Ku percaya semua untuk kebaikanku<br>Bila nanti telah tiba waktu-Mu<br>Ku percaya kuasa-Mu memulihkan hidupku<br>Waktu Tuhan pasti yang terbaik</p>
+                        <br>
+                        <div class="my-4 py-3 bg-white/60 rounded-xl border border-teal-100 shadow-sm">
+                            <p class="font-bold text-teal-700">Reff:<br>Jiwaku terlindung di gunung batu<br>Di dalam dunia yang kelam;<br>Kasih Tuhanku menaungi aku,<br>Hidupku aman dan tentram.</p>
+                        </div>
+                        <p>Ajaib Tuhanku Yesus Juru S'lamat,<br>Besar kasihNya padaku;<br>Naungan jiwaku yang kokoh kuat,<br>Tempat yang tent'ram dan teduh.</p>
+                        <br>
+                        <p>Ajaib Tuhanku Yesus Juru S'lamat,<br>DiangkatNya tanggunganku;<br>Aku ditegakkan sekokoh karang,<br>Padaku kekuatan baru.</p>
+                    </div>
+                </details>
+
+                 <!-- Doa Penutup Box -->
+                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 text-center border border-amber-200 shadow-md relative overflow-hidden">
+                     <div class="absolute -right-6 -top-6 text-amber-200 opacity-40 transform rotate-12">
+                         <i data-lucide="praying-hands" class="w-24 h-24"></i>
+                     </div>
+                    <p class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1 relative z-10">Doa Penutup</p>
+                    <p class="font-serif text-stone-800 text-2xl font-bold relative z-10">Dkn. Apanto</p>
+                 </div>
             </section>
 
-        </div>
-
-        <!-- Song Book Section (Collapsible) -->
-        <div class="bg-stone-800 text-stone-200 p-6 md:p-8">
-            <h3 class="font-serif text-2xl text-center mb-6 text-amber-400">Buku Lagu</h3>
-            
-            <div class="space-y-4">
+            <!-- FOOTER -->
+            <footer class="pt-8 text-center pb-20 relative">
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
                 
-                <!-- Song 1 -->
-                <details class="group bg-stone-700 rounded-lg overflow-hidden transition-all duration-300">
-                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-stone-600 transition">
-                        <span class="font-bold text-amber-100">NP. 4 Allah Bapa Kami Puja</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <div class="p-4 pt-0 text-sm text-stone-300 leading-relaxed border-t border-stone-600">
-                        <br>
-                        Allah Bapa kami puja<br>Dan muliakan namaMu!<br>Dalam Kristus Firman Allah<br>Kami anak-anakMu.<br><br>
-                        <em>Reff:</em><br>Allah Bapa kami puja<br>Dalam pujian merdu!<br>Allah Bapa kami puja<br>Dalam pujian merdu!<br><br>
-                        Putra Allah kami puja,<br>Anak Domba yang megah!<br>Korban yang teramat mulia<br>T'lah memb'ri sejahtera.<br><br>
-                        Rohulkudus kami puja,<br>Roh Penghibur yang mesra!<br>Roh Penolong yang setia<br>Diutus dari surga.
-                    </div>
-                </details>
+                <div class="w-20 h-20 bg-gradient-to-br from-rose-400 to-amber-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-rose-500/30 ring-4 ring-white">
+                    <i data-lucide="heart" class="w-10 h-10 text-white fill-white animate-pulse"></i>
+                </div>
+                
+                <p class="text-sm text-stone-500 mb-2 font-medium">Kami yang berbahagia,</p>
+                <h3 class="font-cinzel text-xl font-bold text-stone-800 mb-1">Keluarga Besar</h3>
+                <!-- FOOTER TITLE FIX -->
+                <h2 class="font-script text-5xl text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-600 drop-shadow-sm mt-2 pb-4 leading-normal px-2">Wijaya & Mery</h2>
+                
+                <div class="mt-12 flex justify-center items-center gap-2 opacity-50">
+                    <div class="h-px w-8 bg-stone-400"></div>
+                    <p class="text-[10px] text-stone-500 uppercase tracking-widest">Terima Kasih</p>
+                    <div class="h-px w-8 bg-stone-400"></div>
+                </div>
+            </footer>
 
-                <!-- Song 2 -->
-                <details class="group bg-stone-700 rounded-lg overflow-hidden transition-all duration-300">
-                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-stone-600 transition">
-                        <span class="font-bold text-amber-100">Cinta Sejati</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <div class="p-4 pt-0 text-sm text-stone-300 leading-relaxed border-t border-stone-600">
-                        <br>
-                        Saat kurenungkan hidup bersamamu<br>
-                        Sering kali ku melupakanmu<br>
-                        Berjalan sendiri seakan ku mampu<br>
-                        Lalui tanpa kekuatanmu<br><br>
-                        Smakin berat beban hidupku<br>
-                        Smakin ku menjauh darimu<br><br>
-                        <em>Reff:</em><br>
-                        Namun ada cinta yang tak pernah berlalu<br>
-                        Cinta yang kudapat darimu<br>
-                        Tlah teruji lalui rentangan sang waktu<br>
-                        Kau mati bagiku berkorban untuk diriku
-                    </div>
-                </details>
-
-                <!-- Song 3 -->
-                <details class="group bg-stone-700 rounded-lg overflow-hidden transition-all duration-300">
-                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-stone-600 transition">
-                        <span class="font-bold text-amber-100">NP. 291 Mari Kumpulkan</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <div class="p-4 pt-0 text-sm text-stone-300 leading-relaxed border-t border-stone-600">
-                        <br>
-                        Kita menaburkan biji kebenaran<br>
-                        Pada pagi hari, siang, dan petang;<br>
-                        Kita menantikan waktu penuaian:<br>
-                        Pasti ada hasil, hati pun senang.<br><br>
-                        <em>Reff:</em><br>
-                        Mari kumpulkan, mari kumpulkan;<br>
-                        Pasti ada hasil, hati pun senang;<br>
-                        Mari kumpulkan, mari kumpulkan;<br>
-                        Pasti ada hasil, hati pun senang.
-                    </div>
-                </details>
-
-                <!-- Song 4 -->
-                 <details class="group bg-stone-700 rounded-lg overflow-hidden transition-all duration-300">
-                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-stone-600 transition">
-                        <span class="font-bold text-amber-100">Aku Mengasihi Engkau Yesus</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <div class="p-4 pt-0 text-sm text-stone-300 leading-relaxed border-t border-stone-600">
-                        <br>
-                        Aku mengasihi Engkau Yesus<br>
-                        Dengan segenap hatiku<br>
-                        Aku mengasihi Engkau Yesus<br>
-                        Dengan segenap jiwaku<br><br>
-                        Ku renungkan FirmanMu siang dan malam<br>
-                        Ku pegang printahMu dan kulakukan<br>
-                        Engkau tahu ya Tuhan tujuan hidupku<br>
-                        Hanyalah untuk menyenangkan hatiMu
-                    </div>
-                </details>
-
-                <!-- Song 5 -->
-                <details class="group bg-stone-700 rounded-lg overflow-hidden transition-all duration-300">
-                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-stone-600 transition">
-                        <span class="font-bold text-amber-100">NP. 164 Naungan Jiwaku</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <div class="p-4 pt-0 text-sm text-stone-300 leading-relaxed border-t border-stone-600">
-                        <br>
-                        Ku percaya semua untuk kebaikanku<br>
-                        Bila nanti telah tiba waktu-Mu<br>
-                        Ku percaya kuasa-Mu memulihkan hidupku<br>
-                        Waktu Tuhan pasti yang terbaik<br><br>
-                        Ajaib Tuhanku Yesus Juru S'lamat,<br>
-                        Besar kasihNya padaku;<br>
-                        Naungan jiwaku yang kokoh kuat,<br>
-                        Tempat yang tent'ram dan teduh.<br><br>
-                        <em>Reff:</em><br>
-                        Jiwaku terlindung di gunung batu<br>
-                        Di dalam dunia yang kelam;<br>
-                        Kasih Tuhanku menaungi aku,<br>
-                        Hidupku aman dan tentram.
-                    </div>
-                </details>
-
-            </div>
-
-             <div class="mt-12 text-center text-xs text-stone-500">
-                <p>Terima kasih atas kehadiran & doa restu Bapak/Ibu/Saudara/i.</p>
-                <p class="mt-2 font-serif text-amber-600 text-lg">Keluarga Besar Wijaya & Mery</p>
-            </div>
         </div>
-
     </main>
     
-    <!-- Initialize Lucide Icons -->
+    <!-- Initialize Icons -->
     <script>
         lucide.createIcons();
     </script>
 </body>
 </html>
-
