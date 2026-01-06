@@ -1,534 +1,734 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding of Wijaya & Mery</title>
-    <!-- Tailwind CSS -->
+    <title>Neon Velocity Typer V4</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Custom Styles & Animations */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #FDF4F5; /* Soft Pink tint */
-            color: #44403C;
-        }
-        h1, h2, h3, .font-serif {
-            font-family: 'Cormorant Garamond', serif;
-        }
-        .font-script {
-            font-family: 'Great Vibes', cursive;
-        }
-        .font-cinzel {
-            font-family: 'Cinzel', serif;
-        }
-        
-        /* === 1. ANIMASI JUDUL (SHIMMER EFFECT) === */
-        .text-shimmer {
-            background: linear-gradient(
-                to right, 
-                #fde68a 20%, 
-                #fcd34d 40%, 
-                #fffbeb 50%, 
-                #fcd34d 60%, 
-                #fde68a 80%
-            );
-            background-size: 200% auto;
-            color: #fbbf24; /* Fallback */
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite;
-            /* Fix clipping for script fonts with gradients */
-            padding-right: 0.1em; 
-            padding-bottom: 0.1em;
-        }
-        @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow: hidden;
         }
 
-        /* Dropdown Animation */
-        details > summary {
-            list-style: none;
+        /* --- Animations & Effects --- */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
-        details > summary::-webkit-details-marker {
-            display: none;
-        }
-        details[open] summary .chevron-icon {
-            transform: rotate(180deg);
-        }
-        details[open] summary ~ * {
-            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes slideDown {
-            0% { opacity: 0; transform: translateY(-10px); max-height: 0; }
-            100% { opacity: 1; transform: translateY(0); max-height: 500px; }
-        }
-        
-        /* Subtle Background Pattern */
-        .bg-pattern {
-            background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
-            background-size: 24px 24px;
+        .animate-shake { animation: shake 0.5s; }
+        .neon-text { text-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+
+        /* Word Styling */
+        .word-display span.correct { color: #4ade80; text-shadow: 0 0 10px #4ade80; }
+        .word-display span.current { background-color: #3b82f6; color: white; border-radius: 2px; }
+        .word-display span.incorrect { color: #ef4444; text-decoration: underline; }
+
+        /* Particles */
+        .particle { position: absolute; pointer-events: none; animation: fadeOut 1s forwards; }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px) scale(0); } }
+
+        /* Containers */
+        .game-container {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.1);
         }
 
-        /* Floating Blobs for Color */
-        .blob {
-            position: absolute;
-            filter: blur(40px);
-            z-index: 0;
-            opacity: 0.4;
-            border-radius: 50%;
+        /* Youtube Embed Helper */
+        .youtube-embed-container { position: absolute; top: -9999px; left: -9999px; visibility: hidden; width: 1px; height: 1px; }
+
+        /* Music Bar Styles */
+        .music-progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            flex-grow: 1;
+            margin: 0 10px;
+            position: relative;
+        }
+        .music-progress-fill {
+            background: #3b82f6;
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s linear;
         }
     </style>
 </head>
-<body class="bg-pattern min-h-screen flex justify-center selection:bg-rose-200">
+<body class="h-screen w-screen flex flex-col items-center justify-center relative bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center">
+    
+    <div class="absolute inset-0 bg-slate-900/90 z-0"></div>
 
-    <!-- Mobile Container -->
-    <main class="w-full max-w-md bg-white/90 backdrop-blur-sm min-h-screen shadow-2xl relative overflow-hidden flex flex-col border-x border-white">
+    <!-- Main Wrapper -->
+    <div class="z-10 w-full max-w-3xl p-4 h-full max-h-screen overflow-y-auto no-scrollbar relative flex flex-col">
         
-        <!-- Decorative Background Blobs inside Main -->
-        <div class="blob bg-rose-300 w-64 h-64 top-20 -left-20 animate-pulse"></div>
-        <div class="blob bg-blue-200 w-64 h-64 bottom-40 -right-20 animate-pulse" style="animation-delay: 2s"></div>
-
-        <!-- === HERO SECTION (Full Height Fix + Gradient) === -->
-        <header class="relative min-h-[100dvh] flex flex-col justify-center items-center text-center px-6 pt-10 pb-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-stone-100 overflow-hidden">
-            
-            <!-- Animated Stars/Particles (CSS only simple representation) -->
-            <div class="absolute inset-0 opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
-            
-            <!-- Glowing Circle behind Title -->
-            <div class="absolute w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-purple-500/20 rounded-full blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-
-            <div class="z-10 flex flex-col items-center justify-center flex-grow w-full max-w-xs space-y-8">
-                <div class="relative py-4">
-                    <p class="font-cinzel tracking-[0.3em] text-[10px] text-amber-200/80 mb-6 uppercase border-b border-amber-500/30 pb-2 inline-block">The Holy Matrimony of</p>
-                    
-                    <!-- ANIMATED TITLE (FIXED CLIPPING) -->
-                    <!-- Added px-4 (horizontal padding) and leading-relaxed to prevent clipping of swashes -->
-                    <h1 class="text-6xl md:text-7xl font-script text-shimmer mb-1 drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)] leading-relaxed px-4 py-2">Wijaya</h1>
-                    <span class="font-serif text-3xl italic text-amber-200/50 my-0 font-light">&</span>
-                    <h1 class="text-6xl md:text-7xl font-script text-shimmer mt-1 drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)] leading-relaxed px-4 py-2">Mery</h1>
-                </div>
-
-                <!-- Info Card (Glassmorphism + Gradient Border) -->
-                <div class="relative group w-full">
-                    <div class="absolute -inset-0.5 bg-gradient-to-r from-rose-400 to-amber-400 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-                    <div class="relative bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl">
-                        
-                        <!-- Date & Time -->
-                        <div class="flex items-start gap-4 text-left mb-5">
-                            <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-2.5 rounded-xl shadow-lg shadow-amber-500/20">
-                                <i data-lucide="calendar-clock" class="w-5 h-5 text-white"></i>
-                            </div>
-                            <div>
-                                <p class="font-serif text-lg font-bold text-white leading-tight">Minggu, 28 Des 2025</p>
-                                <p class="text-xs text-amber-100/80 mt-1 font-medium">12.30 - 14.00 WIB</p>
-                            </div>
-                        </div>
-
-                        <div class="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent my-4"></div>
-
-                        <!-- Location 1 -->
-                        <div class="flex items-start gap-4 text-left mb-4">
-                            <div class="bg-gradient-to-br from-rose-400 to-pink-500 p-2.5 rounded-xl shadow-lg shadow-rose-500/20">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-rose-200 uppercase tracking-wider mb-0.5 font-bold">Lokasi Pemberkatan</p>
-                                <p class="font-serif text-md leading-snug text-white">Gereja Kasih Karunia<br><span class="text-sm text-stone-300">TBB Pontianak</span></p>
-                            </div>
-                        </div>
-
-                        <!-- Location 2 -->
-                        <div class="flex items-start gap-4 text-left">
-                            <div class="bg-gradient-to-br from-indigo-400 to-blue-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/20">
-                                <i data-lucide="church" class="w-5 h-5 text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-indigo-200 uppercase tracking-wider mb-0.5 font-bold">Dilayani Oleh</p>
-                                <p class="font-serif text-md leading-snug text-white">Gereja Baptis Anugerah</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-8 animate-bounce z-10 opacity-60">
-                <i data-lucide="chevrons-down" class="w-6 h-6 text-amber-200 mx-auto drop-shadow-lg"></i>
-            </div>
-            
-            <!-- Curve Bottom -->
-            <div class="absolute bottom-0 left-0 right-0">
-                <svg viewBox="0 0 1440 320" class="w-full h-auto block translate-y-1">
-                    <path fill="#ffffff" fill-opacity="0.9" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                </svg>
+        <!-- Header & Language Switcher -->
+        <header class="flex justify-between items-center mb-6 sticky top-0 z-20 shrink-0">
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 neon-text">
+                VELOCITY<span id="trans-title-suffix" class="text-white">TYPER</span>
+            </h1>
+            <div class="flex gap-2 text-xs md:text-sm font-bold">
+                <button id="lang-id" class="px-2 md:px-3 py-1 rounded border transition active">INDONESIA</button>
+                <button id="lang-en" class="px-2 md:px-3 py-1 rounded border transition opacity-50">ENGLISH</button>
             </div>
         </header>
 
-        <!-- === CONTENT === -->
-        <div class="px-6 py-4 space-y-14 relative z-20">
+        <!-- GAME AREA -->
+        <div id="game-box" class="game-container rounded-2xl p-6 md:p-8 text-center relative overflow-hidden hidden mb-4 min-h-[450px] flex flex-col justify-between">
+            
+            <!-- In-Game Controls (Top Right) -->
+            <div class="absolute top-4 right-4 flex gap-2 z-30">
+                <button onclick="togglePause()" class="w-10 h-10 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center transition border border-slate-600">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button onclick="confirmExit()" class="w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500 hover:text-white text-red-400 flex items-center justify-center transition border border-red-500/30">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
 
-            <!-- Verse Quote -->
-            <div class="text-center space-y-4 px-2 py-6 relative">
-                <i data-lucide="quote" class="w-8 h-8 text-rose-300 mx-auto fill-rose-100 transform -scale-x-100"></i>
-                <p class="font-serif italic text-stone-600 text-xl leading-relaxed drop-shadow-sm">
-                    "Dan di atas semuanya itu: kenakanlah kasih, sebagai pengikat yang mempersatukan dan menyempurnakan."
-                </p>
-                <div class="flex items-center justify-center gap-3">
-                    <div class="h-px w-8 bg-rose-300"></div>
-                    <p class="text-xs font-bold text-rose-400 uppercase tracking-widest font-cinzel">Kolose 3:14</p>
-                    <div class="h-px w-8 bg-rose-300"></div>
+            <!-- HUD -->
+            <div class="flex justify-between items-center text-slate-400 text-xs md:text-sm uppercase tracking-widest mt-4 shrink-0">
+                <div class="flex flex-col items-start">
+                    <span id="trans-hud-time">Waktu</span>
+                    <span id="timer" class="text-3xl md:text-4xl font-bold text-white">60</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="trans-hud-combo">Combo</span>
+                    <span id="combo" class="text-xl md:text-2xl font-bold text-yellow-400">x1</span>
+                </div>
+                <div class="flex flex-col items-end">
+                    <span id="trans-hud-score">Skor</span>
+                    <span id="score" class="text-3xl md:text-4xl font-bold text-white">0</span>
                 </div>
             </div>
 
-            <!-- SECTION I: PROSESI -->
-            <section class="relative">
-                <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
-                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-600 rounded-full font-serif text-2xl font-bold shadow-inner">
-                        01
-                    </div>
-                    <div>
-                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Prosesi Masuk</h2>
-                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">The Procession</p>
-                    </div>
+            <!-- The Word Area (Center) -->
+            <div class="relative flex-grow flex flex-col items-center justify-center my-2">
+                <div id="word-display" class="text-5xl md:text-7xl font-bold tracking-wide transition-all duration-100 select-none break-words max-w-full z-10"></div>
+                <div id="feedback-msg" class="absolute bottom-10 text-sm font-bold opacity-0 transition-opacity text-yellow-400"></div>
+                
+                <div class="mt-8 text-slate-500 text-sm">
+                    <i class="fas fa-keyboard mr-2 animate-pulse"></i> <span id="trans-game-hint">Ketik kata di atas secepat mungkin</span>
                 </div>
+            </div>
 
-                <div class="relative pl-4 space-y-5 border-l-2 border-dashed border-emerald-200 ml-5">
-                    <!-- Item List -->
-                    <div class="relative pl-8 group">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-100 border-2 border-emerald-400 group-hover:bg-emerald-400 transition-colors"></div>
-                        <p class="font-bold text-stone-700">Musik Pembuka</p>
-                        <span class="inline-block px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full mt-1 border border-emerald-100 font-medium">Instrument</span>
+            <!-- Music & Visualizer Section (Bottom) -->
+            <div class="relative w-full mt-4 shrink-0">
+                 <!-- Visualizer Canvas -->
+                 <canvas id="visualizer-canvas" class="w-full h-16 rounded mb-2 opacity-80" width="600" height="100"></canvas>
+                 
+                 <!-- Music Controls -->
+                 <div id="music-controls" class="flex items-center justify-between bg-slate-800/50 p-2 rounded-lg border border-slate-700/50">
+                    <button id="btn-music-play" onclick="toggleMusicPlayback()" class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white transition">
+                        <i class="fas fa-pause text-xs" id="icon-music-state"></i>
+                    </button>
+                    
+                    <div class="music-progress-container">
+                        <div id="music-progress-fill" class="music-progress-fill"></div>
                     </div>
                     
-                    <div class="relative pl-8 group">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-stone-300 group-hover:border-emerald-400 transition-colors"></div>
-                        <p class="text-stone-700">Pemasangan Lilin</p>
-                    </div>
-
-                    <div class="relative pl-8 group">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-stone-300 group-hover:border-emerald-400 transition-colors"></div>
-                        <p class="text-stone-700">Orang Tua Masuk</p>
-                    </div>
-                    
-                    <div class="relative pl-8 group">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-stone-300 group-hover:border-emerald-400 transition-colors"></div>
-                        <p class="text-stone-700">Pendeta Menuju Mimbar</p>
-                    </div>
-
-                    <!-- Highlight: Pengantin -->
-                    <div class="relative pl-6 mt-4">
-                        <div class="bg-gradient-to-r from-emerald-50 to-white p-4 rounded-xl border-l-4 border-emerald-500 shadow-sm mb-3">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-emerald-100 p-1.5 rounded-full"><i data-lucide="user" class="w-4 h-4 text-emerald-600"></i></div>
-                                <div>
-                                    <p class="font-bold text-stone-800">Pengantin Pria</p>
-                                    <p class="text-xs text-stone-500">Masuk bersama pendamping</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gradient-to-r from-emerald-50 to-white p-4 rounded-xl border-l-4 border-emerald-500 shadow-sm">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-emerald-100 p-1.5 rounded-full"><i data-lucide="heart" class="w-4 h-4 text-emerald-600"></i></div>
-                                <div>
-                                    <p class="font-bold text-stone-800">Pengantin Wanita</p>
-                                    <p class="text-xs text-stone-500">Diantar oleh Ayah</p>
-                                </div>
-                            </div>
-                            <div class="mt-2 ml-10 inline-flex items-center gap-1.5 bg-stone-800 text-white text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
-                                <i data-lucide="arrow-up" class="w-3 h-3"></i> Jemaat Dimohon Berdiri
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION II: IBADAH -->
-            <section class="relative">
-                 <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
-                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-600 rounded-full font-serif text-2xl font-bold shadow-inner">
-                        02
-                    </div>
-                    <div>
-                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Ibadah Pembukaan</h2>
-                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">Opening Service</p>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    
-                    <!-- SONG 1: Pujian Pembuka (Theme: Purple/Music) -->
-                    <details class="group bg-white border border-purple-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-purple-300 transition-all">
-                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-purple-50/50 transition select-none">
-                            <div class="flex-1 pr-4">
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                                        <i data-lucide="music-2" class="w-3 h-3"></i> Musik
-                                    </div>
-                                    <p class="text-[10px] text-purple-400 font-bold tracking-widest uppercase">Pujian Pembuka</p>
-                                </div>
-                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">NP. 4 Allah Bapa Kami Puja</h3>
-                                <p class="text-[10px] text-stone-400 mt-2 flex items-center gap-1 group-open:hidden animate-pulse">
-                                    Ketuk untuk lirik <i data-lucide="chevrons-down" class="w-3 h-3"></i>
-                                </p>
-                            </div>
-                            <!-- Colorful Arrow Indicator -->
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-purple-50 group-open:bg-gradient-to-br group-open:from-purple-500 group-open:to-fuchsia-600 group-open:text-white text-purple-400 transition-all duration-300 shadow-inner group-open:shadow-lg">
-                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
-                            </div>
-                        </summary>
-                        <div class="bg-purple-50/30 px-6 py-6 border-t border-purple-100 text-sm text-stone-600 leading-relaxed text-center relative">
-                            <p>Allah Bapa kami puja<br>Dan muliakan namaMu!<br>Dalam Kristus Firman Allah<br>Kami anak-anakMu.</p>
-                            <div class="my-4 py-3 bg-white/60 rounded-xl border border-purple-100 shadow-sm">
-                                <p class="font-bold text-purple-700">Reff:<br>Allah Bapa kami puja<br>Dalam pujian merdu! (2x)</p>
-                            </div>
-                            <p>Putra Allah kami puja,<br>Anak Domba yang megah!<br>Korban yang teramat mulia<br>T'lah memb'ri sejahtera.</p>
-                            <br>
-                            <p>Rohulkudus kami puja,<br>Roh Penghibur yang mesra!<br>Roh Penolong yang setia<br>Diutus dari surga.</p>
-                        </div>
-                    </details>
-
-                    <!-- Normal Item (Prayer) -->
-                    <div class="flex items-center gap-4 p-4 border-l-2 border-indigo-200 bg-indigo-50/30 rounded-r-xl ml-1">
-                        <div class="bg-indigo-100 p-2 rounded-full text-indigo-600">
-                            <i data-lucide="user" class="w-4 h-4"></i>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-bold text-stone-800">Doa Pembukaan</p>
-                            <p class="text-sm text-indigo-600 font-medium">Dkn. Handi</p>
-                        </div>
-                    </div>
-
-                    <!-- SONG 2: Pujian Bersama (Theme: Blue/Togetherness) -->
-                    <details class="group bg-white border border-blue-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-blue-300 transition-all">
-                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-blue-50/50 transition select-none">
-                            <div class="flex-1 pr-4">
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                                        <i data-lucide="users" class="w-3 h-3"></i> Bersama
-                                    </div>
-                                    <p class="text-[10px] text-blue-400 font-bold tracking-widest uppercase">Pujian Bersama</p>
-                                </div>
-                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">Cinta Sejati</h3>
-                            </div>
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 group-open:bg-gradient-to-br group-open:from-blue-500 group-open:to-cyan-600 group-open:text-white text-blue-400 transition-all duration-300 shadow-inner group-open:shadow-lg">
-                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
-                            </div>
-                        </summary>
-                        <div class="bg-blue-50/30 px-6 py-6 border-t border-blue-100 text-sm text-stone-600 leading-relaxed text-center">
-                            <p>Saat kurenungkan hidup bersamamu<br>Sering kali ku melupakanmu<br>Berjalan sendiri seakan ku mampu<br>Lalui tanpa kekuatanmu</p>
-                            <div class="my-4 py-3 bg-white/60 rounded-xl border border-blue-100 shadow-sm">
-                                <p class="font-bold text-blue-700">Reff:<br>Namun ada cinta yang tak pernah berlalu<br>Cinta yang kudapat darimu<br>Tlah teruji lalui rentangan sang waktu<br>Kau mati bagiku berkorban untuk diriku</p>
-                            </div>
-                        </div>
-                    </details>
-
-                    <!-- SONG 3: Persembahan (Theme: Green/Gift) -->
-                    <details class="group bg-white border border-green-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-green-300 transition-all">
-                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-green-50/50 transition select-none">
-                            <div class="flex-1 pr-4">
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <div class="bg-gradient-to-r from-emerald-500 to-green-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                                        <i data-lucide="gift" class="w-3 h-3"></i> Kolekte
-                                    </div>
-                                    <p class="text-[10px] text-green-500 font-bold tracking-widest uppercase">Persembahan</p>
-                                </div>
-                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">NP. 291 Mari Kumpulkan</h3>
-                            </div>
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-50 group-open:bg-gradient-to-br group-open:from-emerald-500 group-open:to-green-600 group-open:text-white text-green-500 transition-all duration-300 shadow-inner group-open:shadow-lg">
-                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
-                            </div>
-                        </summary>
-                        <div class="bg-green-50/30 px-6 py-6 border-t border-green-100 text-sm text-stone-600 leading-relaxed text-center">
-                            <p>Kita menaburkan biji kebenaran<br>Pada pagi hari, siang, dan petang;<br>Kita menantikan waktu penuaian:<br>Pasti ada hasil, hati pun senang.</p>
-                            <div class="my-4 py-3 bg-white/60 rounded-xl border border-green-100 shadow-sm">
-                                <p class="font-bold text-green-700">Reff:<br>Mari kumpulkan, mari kumpulkan;<br>Pasti ada hasil, hati pun senang (2x)</p>
-                            </div>
-                            <p>Taburkanlah dalam t'rang dan kegelapan,<br>Walaupun bertiup angin yang kencang;<br>Kerja dan usaha akan digenapkan:<br>Pasti ada hasil, hati pun senang.</p>
-                            
-                            <div class="mt-4 p-3 bg-green-100/50 rounded-lg flex items-center justify-center gap-2 text-green-800 text-xs font-bold border border-green-200">
-                                <i data-lucide="user" class="w-3 h-3"></i> Doa Persembahan: Dkn. Adrianus Awan
-                            </div>
-                        </div>
-                    </details>
-
-                     <!-- SONG 4: Pujian Khusus (Theme: Orange/Star) -->
-                    <details class="group bg-white border border-orange-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-orange-300 transition-all">
-                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-orange-50/50 transition select-none">
-                            <div class="flex-1 pr-4">
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <div class="bg-gradient-to-r from-orange-400 to-amber-500 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                                        <i data-lucide="star" class="w-3 h-3"></i> Spesial
-                                    </div>
-                                    <p class="text-[10px] text-orange-400 font-bold tracking-widest uppercase">Pujian Khusus</p>
-                                </div>
-                                <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">Aku Mengasihi Engkau Yesus</h3>
-                            </div>
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-orange-50 group-open:bg-gradient-to-br group-open:from-orange-400 group-open:to-amber-500 group-open:text-white text-orange-400 transition-all duration-300 shadow-inner group-open:shadow-lg">
-                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
-                            </div>
-                        </summary>
-                        <div class="bg-orange-50/30 px-6 py-6 border-t border-orange-100 text-sm text-stone-600 leading-relaxed text-center">
-                            <p>Aku mengasihi Engkau Yesus<br>Dengan segenap hatiku<br>Aku mengasihi Engkau Yesus<br>Dengan segenap jiwaku</p>
-                            <br>
-                            <p>Ku renungkan FirmanMu siang dan malam<br>Ku pegang printahMu dan kulakukan<br>Engkau tahu ya Tuhan tujuan hidupku<br>Hanyalah untuk menyenangkan hatiMu</p>
-                        </div>
-                    </details>
-                </div>
-            </section>
-
-            <!-- SECTION III: PEMBERKATAN -->
-            <section class="relative">
-                 <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
-                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-rose-100 to-rose-200 text-rose-600 rounded-full font-serif text-2xl font-bold shadow-inner">
-                        03
-                    </div>
-                    <div>
-                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Pemberkatan Nikah</h2>
-                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">Holy Matrimony</p>
-                    </div>
-                </div>
-
-                <!-- Pastor Info Card -->
-                <div class="relative overflow-hidden bg-gradient-to-br from-slate-800 to-stone-900 text-white p-6 rounded-2xl text-center mb-6 shadow-xl border border-stone-700">
-                    <!-- Background Shine -->
-                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/30 rounded-full blur-3xl"></div>
-                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500/30 rounded-full blur-3xl"></div>
-                    
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3 backdrop-blur-sm border border-white/20">
-                            <i data-lucide="book-open" class="w-6 h-6 text-amber-300"></i>
-                        </div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] mb-2 text-stone-400">Pelayan Firman Tuhan</p>
-                        <div class="h-0.5 w-16 bg-amber-500 mx-auto mb-3 rounded-full"></div>
-                        <p class="font-serif text-xl font-bold text-white leading-tight">Pdt. Heldy Panambunan, S.Th., M.Pd</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-3">
-                    <!-- Items with custom icons and colors -->
-                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
-                        <div class="bg-amber-100 p-2 rounded-lg text-amber-600 mr-3"><i data-lucide="info" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-medium text-stone-700">Penjelasan Maksud Pernikahan</span>
-                    </div>
-                    
-                    <div class="flex items-center p-3.5 bg-gradient-to-r from-rose-50 to-white border border-rose-200 shadow-md rounded-xl transform scale-[1.02]">
-                        <div class="bg-rose-100 p-2 rounded-lg text-rose-600 mr-3"><i data-lucide="heart-handshake" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-bold text-stone-800">Janji Pernikahan (Vows)</span>
-                    </div>
-                    
-                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
-                        <div class="bg-orange-100 p-2 rounded-lg text-orange-600 mr-3"><i data-lucide="flame" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-medium text-stone-700">Pemasangan Lilin Kesatuan</span>
-                    </div>
-                    
-                    <div class="flex items-center p-3.5 bg-gradient-to-r from-blue-50 to-white border border-blue-200 shadow-md rounded-xl transform scale-[1.02]">
-                        <div class="bg-blue-100 p-2 rounded-lg text-blue-600 mr-3"><i data-lucide="user-check" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-bold text-stone-800">Peneguhan Suami & Istri</span>
-                    </div>
-                    
-                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
-                        <div class="bg-purple-100 p-2 rounded-lg text-purple-600 mr-3"><i data-lucide="unlock" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-medium text-stone-700">Pembukaan Tudung</span>
-                    </div>
-                    
-                    <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
-                        <div class="bg-pink-100 p-2 rounded-lg text-pink-600 mr-3"><i data-lucide="users" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-medium text-stone-700">Sungkeman (Restu Orang Tua)</span>
-                    </div>
-                    
-                     <div class="flex items-center p-3.5 bg-white rounded-xl border border-stone-100 shadow-sm hover:border-amber-200 transition">
-                        <div class="bg-teal-100 p-2 rounded-lg text-teal-600 mr-3"><i data-lucide="book" class="w-4 h-4"></i></div>
-                        <span class="text-sm font-medium text-stone-700">Penyerahan Alkitab</span>
-                    </div>
-                </div>
-            </section>
-
-             <!-- SECTION IV: PENUTUP -->
-            <section class="relative">
-                 <div class="flex items-center gap-4 mb-6 sticky top-0 bg-white/80 backdrop-blur-md py-4 z-30 border-b border-stone-100 shadow-sm rounded-b-2xl px-2">
-                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 rounded-full font-serif text-2xl font-bold shadow-inner">
-                        04
-                    </div>
-                    <div>
-                        <h2 class="font-cinzel text-lg font-bold text-stone-800 tracking-wide">Penutup</h2>
-                        <p class="text-[10px] text-stone-400 uppercase tracking-widest">Closing</p>
-                    </div>
-                </div>
-
-                <!-- SONG 5: Pujian Penutup (Theme: Teal/Blessing) -->
-                <details class="group bg-white border border-teal-100 rounded-2xl shadow-sm overflow-hidden mb-6 hover:shadow-md hover:border-teal-300 transition-all">
-                    <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-teal-50/50 transition select-none">
-                        <div class="flex-1 pr-4">
-                             <div class="flex items-center gap-2 mb-1.5">
-                                <div class="bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                                    <i data-lucide="sunset" class="w-3 h-3"></i> Berkat
-                                </div>
-                                <p class="text-[10px] text-teal-500 font-bold tracking-widest uppercase">Pujian Penutup</p>
-                            </div>
-                            <h3 class="font-serif font-bold text-stone-800 text-lg leading-tight">NP. 164 Naungan Jiwaku</h3>
-                        </div>
-                         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-teal-50 group-open:bg-gradient-to-br group-open:from-teal-500 group-open:to-cyan-600 group-open:text-white text-teal-500 transition-all duration-300 shadow-inner group-open:shadow-lg">
-                            <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 chevron-icon"></i>
-                        </div>
-                    </summary>
-                    <div class="bg-teal-50/30 px-6 py-6 border-t border-teal-100 text-sm text-stone-600 leading-relaxed text-center">
-                        <p>Ku percaya semua untuk kebaikanku<br>Bila nanti telah tiba waktu-Mu<br>Ku percaya kuasa-Mu memulihkan hidupku<br>Waktu Tuhan pasti yang terbaik</p>
-                        <br>
-                        <div class="my-4 py-3 bg-white/60 rounded-xl border border-teal-100 shadow-sm">
-                            <p class="font-bold text-teal-700">Reff:<br>Jiwaku terlindung di gunung batu<br>Di dalam dunia yang kelam;<br>Kasih Tuhanku menaungi aku,<br>Hidupku aman dan tentram.</p>
-                        </div>
-                        <p>Ajaib Tuhanku Yesus Juru S'lamat,<br>Besar kasihNya padaku;<br>Naungan jiwaku yang kokoh kuat,<br>Tempat yang tent'ram dan teduh.</p>
-                        <br>
-                        <p>Ajaib Tuhanku Yesus Juru S'lamat,<br>DiangkatNya tanggunganku;<br>Aku ditegakkan sekokoh karang,<br>Padaku kekuatan baru.</p>
-                    </div>
-                </details>
-
-                 <!-- Doa Penutup Box -->
-                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 text-center border border-amber-200 shadow-md relative overflow-hidden">
-                     <div class="absolute -right-6 -top-6 text-amber-200 opacity-40 transform rotate-12">
-                         <i data-lucide="praying-hands" class="w-24 h-24"></i>
-                     </div>
-                    <p class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1 relative z-10">Doa Penutup</p>
-                    <p class="font-serif text-stone-800 text-2xl font-bold relative z-10">Dkn. Apanto</p>
+                    <div id="music-time-display" class="text-[10px] font-mono text-slate-400 w-16 text-right">00:00</div>
                  </div>
-            </section>
+            </div>
 
-            <!-- FOOTER -->
-            <footer class="pt-8 text-center pb-20 relative">
-                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
-                
-                <div class="w-20 h-20 bg-gradient-to-br from-rose-400 to-amber-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-rose-500/30 ring-4 ring-white">
-                    <i data-lucide="heart" class="w-10 h-10 text-white fill-white animate-pulse"></i>
-                </div>
-                
-                <p class="text-sm text-stone-500 mb-2 font-medium">Kami yang berbahagia,</p>
-                <h3 class="font-cinzel text-xl font-bold text-stone-800 mb-1">Keluarga Besar</h3>
-                <!-- FOOTER TITLE FIX -->
-                <h2 class="font-script text-5xl text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-600 drop-shadow-sm mt-2 pb-4 leading-normal px-2">Nataniel Todingbua & Andreas Ajun</h2>
-                
-                <div class="mt-12 flex justify-center items-center gap-2 opacity-50">
-                    <div class="h-px w-8 bg-stone-400"></div>
-                    <p class="text-[10px] text-stone-500 uppercase tracking-widest">Terima Kasih</p>
-                    <div class="h-px w-8 bg-stone-400"></div>
-                </div>
-            </footer>
+            <!-- Time Progress Bar (Top Edge) -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-slate-800">
+                <div id="time-bar" class="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-1000 ease-linear" style="width: 100%"></div>
+            </div>
 
+            <!-- Pause Overlay -->
+            <div id="pause-overlay" class="hidden absolute inset-0 bg-slate-900/95 z-40 flex flex-col items-center justify-center backdrop-blur-sm">
+                <h2 class="text-4xl font-bold text-white mb-8 tracking-widest">PAUSED</h2>
+                <button onclick="togglePause()" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold transition flex items-center">
+                    <i class="fas fa-play mr-2"></i> <span id="trans-btn-resume">LANJUTKAN</span>
+                </button>
+            </div>
         </div>
-    </main>
-    
-    <!-- Initialize Icons -->
+
+        <!-- MENU AREA -->
+        <div id="menu-box" class="game-container rounded-2xl p-6 md:p-10 text-center mb-4">
+            <div class="mb-6">
+                <i class="fas fa-bolt text-5xl text-yellow-400 mb-4 animate-bounce"></i>
+                <h2 id="trans-ready-title" class="text-3xl font-bold text-white mb-2">SIAP MENGETIK?</h2>
+                <p id="trans-ready-desc" class="text-slate-400">Uji kecepatan jari dan akurasi Anda.</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2 md:gap-4 mb-6">
+                <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                    <div class="text-lg md:text-2xl font-bold text-blue-400 mb-1">Easy</div>
+                    <div id="trans-diff-easy" class="text-[10px] md:text-xs text-slate-500">Kata Pendek</div>
+                </div>
+                <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                    <div class="text-lg md:text-2xl font-bold text-purple-400 mb-1">Medium</div>
+                    <div id="trans-diff-med" class="text-[10px] md:text-xs text-slate-500">Kata Sedang</div>
+                </div>
+                <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                    <div class="text-lg md:text-2xl font-bold text-pink-400 mb-1">Hard</div>
+                    <div id="trans-diff-hard" class="text-[10px] md:text-xs text-slate-500">Kata Panjang</div>
+                </div>
+            </div>
+
+             <!-- Music Settings -->
+             <div class="mb-8 p-4 bg-slate-800/70 rounded-xl text-left border border-slate-700/50">
+                <h3 class="text-white font-bold mb-3 flex items-center">
+                    <i class="fas fa-music mr-2 text-blue-400"></i> <span id="trans-music-title">Musik Latar</span>
+                </h3>
+                
+                <div class="flex flex-wrap gap-4 mb-4 text-sm">
+                    <div class="flex items-center">
+                        <input id="music-off" type="radio" name="music-source" value="off" class="peer hidden" checked>
+                        <label for="music-off" class="flex items-center cursor-pointer text-slate-400 peer-checked:text-blue-400 peer-checked:font-bold transition-all">
+                            <div class="w-4 h-4 mr-2 rounded-full border border-slate-400 peer-checked:border-blue-400 peer-checked:bg-blue-400 relative"></div>
+                            Off
+                        </label>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="music-local" type="radio" name="music-source" value="local" class="peer hidden">
+                        <label for="music-local" class="flex items-center cursor-pointer text-slate-400 peer-checked:text-blue-400 peer-checked:font-bold transition-all">
+                            <div class="w-4 h-4 mr-2 rounded-full border border-slate-400 peer-checked:border-blue-400 peer-checked:bg-blue-400 relative"></div>
+                            Local File
+                        </label>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="music-youtube" type="radio" name="music-source" value="youtube" class="peer hidden">
+                        <label for="music-youtube" class="flex items-center cursor-pointer text-slate-400 peer-checked:text-blue-400 peer-checked:font-bold transition-all">
+                            <div class="w-4 h-4 mr-2 rounded-full border border-slate-400 peer-checked:border-blue-400 peer-checked:bg-blue-400 relative"></div>
+                            YouTube
+                        </label>
+                    </div>
+                </div>
+
+                <div id="input-local-container" class="hidden mt-3 p-3 bg-slate-900/50 rounded-lg border border-slate-700">
+                    <input type="file" id="local-audio-file" accept="audio/*" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+                    <p class="text-xs text-slate-500 mt-2 italic" id="trans-local-hint">*Pilih file audio (mp3, wav).</p>
+                </div>
+
+                <div id="input-youtube-container" class="hidden mt-3 p-3 bg-slate-900/50 rounded-lg border border-slate-700">
+                    <input type="text" id="youtube-id-input" placeholder="Paste YouTube Link here..." class="w-full p-2 rounded bg-slate-800 border border-slate-600 text-white focus:border-blue-500 outline-none text-sm font-mono placeholder-slate-600">
+                    <p class="text-xs text-slate-500 mt-2 italic" id="trans-youtube-hint">*Masukkan Link YouTube penuh atau ID video.</p>
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-full text-xl shadow-lg shadow-blue-500/30 transform hover:scale-105 transition-all active:scale-95">
+                <span id="trans-btn-start">MULAI GAME</span> <i class="fas fa-play ml-2"></i>
+            </button>
+        </div>
+
+        <!-- GAME OVER MODAL -->
+        <div id="game-over-box" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <div class="game-container p-8 rounded-2xl text-center max-w-md w-full border-2 border-red-500/50 animate-pulse relative">
+                <h2 id="trans-go-title" class="text-3xl md:text-4xl font-bold text-white mb-2">WAKTU HABIS!</h2>
+                <div class="bg-slate-800/80 rounded-lg p-6 mb-6">
+                    <div id="trans-go-final-score" class="text-sm text-slate-400 uppercase tracking-widest mb-1">Skor Akhir</div>
+                    <div id="final-score" class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-4">0</div>
+                    <div class="grid grid-cols-2 gap-4 text-left mb-4">
+                        <div class="bg-slate-900/50 p-2 rounded">
+                            <span id="trans-go-accuracy" class="text-xs text-slate-500 block">Akurasi</span>
+                            <span id="final-accuracy" class="text-xl font-bold text-white">0%</span>
+                        </div>
+                        <div class="bg-slate-900/50 p-2 rounded">
+                            <span class="text-xs text-slate-500 block">WPM</span>
+                            <span id="final-wpm" class="text-xl font-bold text-white">0</span>
+                        </div>
+                    </div>
+                     <div class="border-t border-slate-700 pt-4">
+                        <div id="trans-go-analysis-title" class="text-xs text-blue-400 uppercase tracking-widest mb-2">Analisis Performa</div>
+                        <p id="final-analysis" class="text-white italic text-sm leading-relaxed"></p>
+                     </div>
+                </div>
+                <button onclick="resetGame()" class="w-full px-6 py-3 bg-white text-slate-900 font-bold rounded hover:bg-gray-200 transition active:scale-95">
+                    <span id="trans-btn-retry">COBA LAGI</span> <i class="fas fa-redo ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- EXIT MODAL -->
+        <div id="exit-confirm-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-600 max-w-sm w-full text-center shadow-2xl">
+                <i class="fas fa-exclamation-triangle text-yellow-400 text-3xl mb-4"></i>
+                <h3 class="text-xl font-bold text-white mb-2" id="trans-exit-title">Keluar Game?</h3>
+                <p class="text-slate-400 mb-6 text-sm" id="trans-exit-desc">Progres permainan saat ini akan hilang.</p>
+                <div class="flex gap-3 justify-center">
+                    <button onclick="cancelExit()" class="px-4 py-2 rounded bg-slate-700 hover:bg-slate-600 text-white transition text-sm">Cancel</button>
+                    <button onclick="doExit()" class="px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white font-bold transition text-sm">Exit Game</button>
+                </div>
+            </div>
+        </div>
+
+        <input type="text" id="hidden-input" class="opacity-0 absolute top-0 left-0 h-0 w-0" autocomplete="off">
+        <audio id="bg-music-local" class="hidden" crossorigin="anonymous"></audio>
+        <div class="youtube-embed-container">
+            <iframe id="youtube-iframe" width="1" height="1" src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
+
+    <!-- Game Logic -->
     <script>
-        lucide.createIcons();
+        // --- LOCALIZATION & WORDS (Same as before) ---
+        const translations = {
+            ID: {
+                titleSuffix: "TYPER", hudTime: "Waktu", hudCombo: "Combo", hudScore: "Skor",
+                gameHint: "Ketik kata di atas secepat mungkin", readyTitle: "SIAP MENGETIK?",
+                readyDesc: "Uji kecepatan jari dan akurasi Anda.", diffEasy: "Kata Pendek", diffMed: "Kata Sedang",
+                diffHard: "Kata Panjang", musicTitle: "Musik Latar", localHint: "*Pilih file audio (mp3, wav).",
+                youtubeHint: "*Masukkan Link YouTube penuh.", btnStart: "MULAI GAME", btnResume: "LANJUTKAN",
+                goTitle: "WAKTU HABIS!", goDesc: "Permainan selesai.", goFinalScore: "Skor Akhir",
+                goAccuracy: "Akurasi", goAnalysisTitle: "Analisis Performa", btnRetry: "COBA LAGI",
+                exitTitle: "Keluar Game?", exitDesc: "Progres akan hilang.",
+                feedbackPerfect: "SEMPURNA!", feedbackGood: "BAGUS!", feedbackTime: "+2dtk",
+                analysisTier1: "Kecepatan dasar. Perlu latihan lagi.",
+                analysisTier2: "Lumayan, mendekati rata-rata.",
+                analysisTier3: "Hebat! Di atas rata-rata.",
+                analysisTier4: "Luar biasa! Tingkat dewa."
+            },
+            EN: {
+                titleSuffix: "TYPER", hudTime: "Time", hudCombo: "Combo", hudScore: "Score",
+                gameHint: "Type words fast!", readyTitle: "READY TO TYPE?",
+                readyDesc: "Test speed and accuracy.", diffEasy: "Short Words", diffMed: "Medium Words",
+                diffHard: "Long Words", musicTitle: "Background Music", localHint: "*Select audio file.",
+                youtubeHint: "*Enter YouTube Link.", btnStart: "START GAME", btnResume: "RESUME",
+                goTitle: "TIME'S UP!", goDesc: "Game over.", goFinalScore: "Final Score",
+                goAccuracy: "Accuracy", goAnalysisTitle: "Performance Analysis", btnRetry: "TRY AGAIN",
+                exitTitle: "Exit Game?", exitDesc: "Progress lost.",
+                feedbackPerfect: "PERFECT!", feedbackGood: "GOOD!", feedbackTime: "+2s",
+                analysisTier1: "Basic speed. Keep practicing.",
+                analysisTier2: "Not bad, nearly average.",
+                analysisTier3: "Great! Above average.",
+                analysisTier4: "Incredible! God-tier speed."
+            }
+        };
+
+        const wordsData = {
+            ID: ["buku", "meja", "lari", "sapi", "kuda", "mata", "kaki", "susu", "bola", "ikan", "pintu", "rumah", "makan", "minum", "tidur", "hujan", "panas", "dingin", "jalan", "cepat", "sekolah", "belajar", "komputer", "telepon", "jendela", "bendera", "garuda", "jakarta", "indonesia", "merdeka", "keluarga", "sahabat", "bermain", "musik", "gitar", "piano", "dokter", "polisi", "kantor", "pasar", "tanggungjawab", "universitas", "perpustakaan", "pembangunan", "kesejahteraan", "kebudayaan", "pariwisata", "teknologi", "komunikasi", "transportasi"],
+            EN: ["cat", "dog", "sun", "run", "sky", "red", "blue", "one", "two", "box", "tree", "bird", "fish", "jump", "walk", "book", "pen", "desk", "home", "star", "school", "friend", "family", "planet", "guitar", "music", "summer", "winter", "garden", "market", "doctor", "police", "artist", "writer", "player", "gamer", "coder", "happy", "smile", "dance", "extraordinary", "philosophy", "knowledge", "university", "library", "adventure", "challenge", "beautiful", "wonderful", "technology", "communication"]
+        };
+
+        // --- GAME STATE ---
+        let state = {
+            lang: 'ID', score: 0, timeLeft: 60, isPlaying: false, isPaused: false,
+            currentWord: '', currentIndex: 0, combo: 1, correctKeystrokes: 0,
+            totalKeystrokes: 0, wordsCompleted: 0, musicSource: 'off',
+            musicPlaying: false
+        };
+
+        let timerInterval;
+        let visualizerInterval;
+        let analyser, dataArray, audioSrc;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); // For SFX
+        let musicCtx; // Separate context for music visualization
+
+        // --- DOM REFERENCE ---
+        const els = {
+            menuBox: document.getElementById('menu-box'),
+            gameBox: document.getElementById('game-box'),
+            gameOverBox: document.getElementById('game-over-box'),
+            exitConfirmModal: document.getElementById('exit-confirm-modal'),
+            pauseOverlay: document.getElementById('pause-overlay'),
+            wordDisplay: document.getElementById('word-display'),
+            timer: document.getElementById('timer'),
+            timeBar: document.getElementById('time-bar'),
+            score: document.getElementById('score'),
+            combo: document.getElementById('combo'),
+            input: document.getElementById('hidden-input'),
+            feedback: document.getElementById('feedback-msg'),
+            finalScore: document.getElementById('final-score'),
+            finalAccuracy: document.getElementById('final-accuracy'),
+            finalWpm: document.getElementById('final-wpm'),
+            finalAnalysis: document.getElementById('final-analysis'),
+            btnId: document.getElementById('lang-id'),
+            btnEn: document.getElementById('lang-en'),
+            musicRadios: document.getElementsByName('music-source'),
+            inputLocalContainer: document.getElementById('input-local-container'),
+            inputYoutubeContainer: document.getElementById('input-youtube-container'),
+            localAudioFile: document.getElementById('local-audio-file'),
+            youtubeIdInput: document.getElementById('youtube-id-input'),
+            bgMusicLocal: document.getElementById('bg-music-local'),
+            youtubeIframe: document.getElementById('youtube-iframe'),
+            visualizerCanvas: document.getElementById('visualizer-canvas'),
+            musicControls: document.getElementById('music-controls'),
+            musicProgressFill: document.getElementById('music-progress-fill'),
+            musicTimeDisplay: document.getElementById('music-time-display'),
+            iconMusicState: document.getElementById('icon-music-state'),
+            transIds: ['trans-title-suffix', 'trans-hud-time', 'trans-hud-combo', 'trans-hud-score', 'trans-game-hint', 'trans-ready-title', 'trans-ready-desc', 'trans-diff-easy', 'trans-diff-med', 'trans-diff-hard', 'trans-music-title', 'trans-local-hint', 'trans-youtube-hint', 'trans-btn-start', 'trans-go-title', 'trans-go-desc', 'trans-go-final-score', 'trans-go-accuracy', 'trans-go-analysis-title', 'trans-btn-retry', 'trans-btn-resume', 'trans-exit-title', 'trans-exit-desc']
+        };
+
+        // --- HELPER: YouTube ID ---
+        function getYoutubeId(url) {
+            if (!url) return null;
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : (url.length === 11 ? url : null);
+        }
+
+        // --- LOCALIZATION ---
+        function updateInterfaceLanguage() {
+            const t = translations[state.lang];
+            els.transIds.forEach(id => {
+                const el = document.getElementById(id);
+                const key = id.replace('trans-', '').replace(/-([a-z])/g, g => g[1].toUpperCase());
+                if (el && t[key]) el.innerText = t[key];
+            });
+            els.btnId.className = state.lang === 'ID' ? "px-2 md:px-3 py-1 rounded border transition active bg-blue-500/20 border-blue-500" : "px-2 md:px-3 py-1 rounded border transition opacity-50";
+            els.btnEn.className = state.lang === 'EN' ? "px-2 md:px-3 py-1 rounded border transition active bg-blue-500/20 border-blue-500" : "px-2 md:px-3 py-1 rounded border transition opacity-50";
+        }
+        els.btnId.addEventListener('click', () => { state.lang = 'ID'; updateInterfaceLanguage(); });
+        els.btnEn.addEventListener('click', () => { state.lang = 'EN'; updateInterfaceLanguage(); });
+
+        // --- MUSIC HANDLING ---
+        els.musicRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                state.musicSource = e.target.value;
+                els.inputLocalContainer.classList.add('hidden');
+                els.inputYoutubeContainer.classList.add('hidden');
+                stopMusic();
+                if (state.musicSource === 'local') els.inputLocalContainer.classList.remove('hidden');
+                else if (state.musicSource === 'youtube') els.inputYoutubeContainer.classList.remove('hidden');
+            });
+        });
+
+        // Setup Visualizer & Audio Context for Music
+        function setupMusicVisualizer() {
+            if (state.musicSource !== 'local') return;
+            if (!musicCtx) {
+                musicCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioSrc) { audioSrc.disconnect(); } // clean up prev
+            
+            try {
+                audioSrc = musicCtx.createMediaElementSource(els.bgMusicLocal);
+                analyser = musicCtx.createAnalyser();
+                audioSrc.connect(analyser);
+                analyser.connect(musicCtx.destination);
+                analyser.fftSize = 64;
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+            } catch(e) { console.log("CORS/Audio Source Error (Ignorable for now):", e); }
+        }
+
+        function drawVisualizer() {
+            const canvas = els.visualizerCanvas;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            let bars = 30;
+            let barWidth = width / bars;
+            let barHeight;
+            let x = 0;
+
+            if (state.musicSource === 'local' && state.musicPlaying && analyser) {
+                analyser.getByteFrequencyData(dataArray);
+                // Use real data
+                for (let i = 0; i < bars; i++) {
+                    // Map bars to frequency data index
+                    let idx = Math.floor(i * (dataArray.length / bars));
+                    let value = dataArray[idx];
+                    barHeight = (value / 255) * height;
+
+                    ctx.fillStyle = `rgb(${value + 50}, 50, 255)`;
+                    ctx.fillRect(x, height - barHeight, barWidth - 2, barHeight);
+                    x += barWidth;
+                }
+            } else if (state.musicSource === 'youtube' && state.musicPlaying) {
+                // Simulation for YouTube
+                for (let i = 0; i < bars; i++) {
+                    let seed = Math.random();
+                    barHeight = seed * height * 0.6; // random height
+                    ctx.fillStyle = `rgb(59, 130, 246)`; // standard blue
+                    ctx.fillRect(x, height - barHeight, barWidth - 2, barHeight);
+                    x += barWidth;
+                }
+            } else {
+                 // Flat line if stopped
+                ctx.fillStyle = `rgba(59, 130, 246, 0.2)`;
+                ctx.fillRect(0, height - 2, width, 2);
+            }
+
+            if (state.isPlaying) requestAnimationFrame(drawVisualizer);
+        }
+
+        function startMusic() {
+            state.musicPlaying = true;
+            updateMusicUIState(true);
+            
+            if (state.musicSource === 'local') {
+                const file = els.localAudioFile.files[0];
+                if (file) {
+                    els.bgMusicLocal.src = URL.createObjectURL(file);
+                    els.bgMusicLocal.play()
+                        .then(() => setupMusicVisualizer())
+                        .catch(e => console.log("Playback failed:", e));
+                }
+            } else if (state.musicSource === 'youtube') {
+                const videoId = getYoutubeId(els.youtubeIdInput.value.trim());
+                if (videoId) {
+                    els.youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&enablejsapi=1&controls=0&showinfo=0`;
+                }
+            }
+        }
+
+        function stopMusic() {
+            state.musicPlaying = false;
+            updateMusicUIState(false);
+            els.bgMusicLocal.pause();
+            els.bgMusicLocal.currentTime = 0;
+            els.youtubeIframe.src = "";
+        }
+
+        function toggleMusicPlayback() {
+            if (state.musicSource === 'off') return;
+            state.musicPlaying = !state.musicPlaying;
+            updateMusicUIState(state.musicPlaying);
+
+            if (state.musicPlaying) {
+                if(state.musicSource === 'local') els.bgMusicLocal.play();
+                else if (state.musicSource === 'youtube') {
+                    // Try postMessage for YouTube
+                    els.youtubeIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                }
+            } else {
+                if(state.musicSource === 'local') els.bgMusicLocal.pause();
+                else if (state.musicSource === 'youtube') {
+                    els.youtubeIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+            }
+        }
+
+        function updateMusicUIState(isPlaying) {
+            if (isPlaying) {
+                els.iconMusicState.className = "fas fa-pause text-xs";
+            } else {
+                els.iconMusicState.className = "fas fa-play text-xs";
+            }
+        }
+
+        // Music Progress Logic
+        els.bgMusicLocal.addEventListener('timeupdate', () => {
+            if(state.musicSource === 'local') {
+                const pct = (els.bgMusicLocal.currentTime / els.bgMusicLocal.duration) * 100;
+                els.musicProgressFill.style.width = `${pct}%`;
+                
+                // Format time
+                const mins = Math.floor(els.bgMusicLocal.currentTime / 60);
+                const secs = Math.floor(els.bgMusicLocal.currentTime % 60);
+                els.musicTimeDisplay.innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+        });
+
+        // --- SFX ---
+        function playSfx(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'type') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(600, now); osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+                gainNode.gain.setValueAtTime(0.05, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
+            } else if (type === 'error') {
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(100, now + 0.2);
+                gainNode.gain.setValueAtTime(0.1, now); gainNode.gain.linearRampToValueAtTime(0.001, now + 0.2);
+                osc.start(now); osc.stop(now + 0.2);
+            } else if (type === 'success') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(500 + (state.combo * 50), now);
+                gainNode.gain.setValueAtTime(0.1, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
+            }
+        }
+
+        // --- VISUALS ---
+        function createParticles(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle bg-blue-500 rounded-full';
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                const size = Math.random() * 6 + 2; p.style.width = size+'px'; p.style.height = size+'px';
+                const tx = (Math.random()-0.5)*100; const ty = (Math.random()-0.5)*100;
+                document.body.appendChild(p);
+                p.animate([{transform:'translate(0,0) scale(1)', opacity:1},{transform:`translate(${tx}px,${ty}px) scale(0)`, opacity:0}],{duration:600,fill:'forwards'});
+                setTimeout(()=>p.remove(),600);
+            }
+        }
+
+        function showFeedback(text, color) {
+            els.feedback.innerText = text; els.feedback.style.color = color;
+            els.feedback.style.opacity = '1'; els.feedback.style.transform = 'translateY(-15px)';
+            setTimeout(()=>{els.feedback.style.opacity='0';els.feedback.style.transform='translateY(0)';},600);
+        }
+
+        // --- GAME CORE ---
+        function startGame() {
+            state.score = 0; state.timeLeft = 60; state.combo = 1;
+            state.wordsCompleted = 0; state.totalKeystrokes = 0; state.correctKeystrokes = 0;
+            state.isPlaying = true; state.isPaused = false;
+
+            els.menuBox.classList.add('hidden'); els.gameOverBox.classList.add('hidden');
+            els.exitConfirmModal.classList.add('hidden'); els.gameBox.classList.remove('hidden');
+            els.timer.classList.remove('text-red-500'); els.timeBar.classList.add('from-blue-500', 'to-purple-500');
+            els.timeBar.classList.remove('bg-red-500'); els.gameBox.classList.remove('animate-pulse', 'border-red-500/50');
+            els.pauseOverlay.classList.add('hidden');
+            
+            // Show music controls only if music is active
+            els.musicControls.style.visibility = state.musicSource === 'off' ? 'hidden' : 'visible';
+            
+            // Reset Progress Bar Visuals
+            els.musicProgressFill.style.width = '0%';
+            els.musicTimeDisplay.innerText = state.musicSource === 'youtube' ? 'LIVE' : '00:00';
+
+            updateHUD(); nextWord(); startMusic();
+            requestAnimationFrame(drawVisualizer); // Start Visualizer Loop
+            
+            els.input.value = ''; els.input.focus();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(gameLoop, 1000);
+        }
+
+        function gameLoop() {
+            if (!state.isPlaying || state.isPaused) return;
+            state.timeLeft--;
+            els.timer.innerText = state.timeLeft;
+            els.timeBar.style.width = (state.timeLeft / 60 * 100) + '%';
+            if (state.timeLeft <= 10) {
+                els.timer.classList.add('text-red-500');
+                els.timeBar.classList.remove('from-blue-500', 'to-purple-500'); els.timeBar.classList.add('bg-red-500');
+                els.gameBox.classList.add('animate-pulse', 'border-red-500/50');
+            }
+            if (state.timeLeft <= 0) endGame();
+        }
+
+        function togglePause() {
+            if (!state.isPlaying) return;
+            state.isPaused = !state.isPaused;
+            if (state.isPaused) {
+                els.pauseOverlay.classList.remove('hidden');
+                // Pause music logically when game pauses? Usually yes.
+                if(state.musicPlaying) {
+                    if(state.musicSource === 'local') els.bgMusicLocal.pause();
+                    // Keep YouTube playing or pause it? Let's pause it for immersion break.
+                    if(state.musicSource === 'youtube') els.youtubeIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+            } else {
+                els.pauseOverlay.classList.add('hidden');
+                // Resume music if it was playing
+                if(state.musicPlaying) {
+                    if(state.musicSource === 'local') els.bgMusicLocal.play();
+                    if(state.musicSource === 'youtube') els.youtubeIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                }
+                els.input.focus();
+            }
+        }
+
+        function confirmExit() { state.isPaused = true; els.pauseOverlay.classList.add('hidden'); els.exitConfirmModal.classList.remove('hidden'); }
+        function cancelExit() { els.exitConfirmModal.classList.add('hidden'); state.isPaused = true; els.pauseOverlay.classList.remove('hidden'); }
+        function doExit() { stopMusic(); state.isPlaying = false; clearInterval(timerInterval); els.exitConfirmModal.classList.add('hidden'); els.gameBox.classList.add('hidden'); els.menuBox.classList.remove('hidden'); }
+
+        function nextWord() {
+            const list = wordsData[state.lang];
+            let lenFilter = state.score < 50 ? w=>w.length<=4 : state.score < 150 ? w=>w.length>3&&w.length<=7 : w=>w.length>5;
+            let candidates = list.filter(lenFilter);
+            if (candidates.length === 0) candidates = list;
+            state.currentWord = candidates[Math.floor(Math.random() * candidates.length)];
+            state.currentIndex = 0;
+            renderWord();
+        }
+
+        function renderWord() {
+            els.wordDisplay.innerHTML = '';
+            state.currentWord.split('').forEach((char, i) => {
+                const span = document.createElement('span'); span.innerText = char;
+                if (i < state.currentIndex) span.className = 'correct';
+                else if (i === state.currentIndex) span.className = 'current px-1 mx-[1px]';
+                else span.className = 'text-slate-600';
+                els.wordDisplay.appendChild(span);
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            const isControl = e.target.closest('button') || e.target.closest('input') || e.target.closest('label');
+            if (state.isPlaying && !state.isPaused && !isControl) els.input.focus();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!state.isPlaying || state.isPaused) return;
+            if (e.ctrlKey || e.altKey || e.metaKey) return;
+            if (e.key === "Escape") { togglePause(); return; }
+            if (e.key.length > 1) return;
+
+            state.totalKeystrokes++;
+            if (e.key.toLowerCase() === state.currentWord[state.currentIndex].toLowerCase()) {
+                state.currentIndex++; state.correctKeystrokes++; playSfx('type');
+                renderWord();
+                if (state.currentIndex >= state.currentWord.length) wordCompleted();
+            } else {
+                state.combo = 1; playSfx('error');
+                els.gameBox.classList.add('animate-shake'); setTimeout(()=>els.gameBox.classList.remove('animate-shake'),500);
+                if(els.wordDisplay.children[state.currentIndex]) {
+                     els.wordDisplay.children[state.currentIndex].classList.add('incorrect');
+                     setTimeout(()=>els.wordDisplay.children[state.currentIndex]?.classList.remove('incorrect'), 200);
+                }
+                updateHUD();
+            }
+        });
+
+        function wordCompleted() {
+            playSfx('success');
+            const points = state.currentWord.length * state.combo;
+            state.score += points; state.wordsCompleted++;
+            if (state.combo < 5) state.combo++;
+            const rect = els.wordDisplay.getBoundingClientRect();
+            createParticles(rect.left + rect.width/2, rect.top + rect.height/2);
+            const t = translations[state.lang];
+            if (state.currentWord.length > 5) { state.timeLeft = Math.min(state.timeLeft + 2, 60); showFeedback(t.feedbackTime, '#4ade80'); }
+            else { showFeedback(t.feedbackPerfect, '#fbbf24'); }
+            updateHUD(); nextWord();
+        }
+
+        function updateHUD() {
+            els.score.innerText = state.score; els.combo.innerText = `x${state.combo}`;
+            els.combo.className = state.combo >= 4 ? "text-xl md:text-2xl font-bold text-red-500 animate-pulse" : state.combo >= 2 ? "text-xl md:text-2xl font-bold text-yellow-400" : "text-xl md:text-2xl font-bold text-slate-400";
+        }
+
+        function getAnalysis(wpm, lang) {
+            const t = translations[lang];
+            if (wpm < 20) return t.analysisTier1;
+            if (wpm < 40) return t.analysisTier2;
+            if (wpm < 70) return t.analysisTier3;
+            return t.analysisTier4;
+        }
+
+        function endGame() {
+            state.isPlaying = false; clearInterval(timerInterval); stopMusic();
+            const accuracy = state.totalKeystrokes === 0 ? 0 : Math.round((state.correctKeystrokes / state.totalKeystrokes) * 100);
+            const finalWpmRaw = state.wordsCompleted; 
+            els.finalScore.innerText = state.score; els.finalAccuracy.innerText = accuracy + "%"; els.finalWpm.innerText = finalWpmRaw;
+            els.finalAnalysis.innerText = getAnalysis(finalWpmRaw, state.lang);
+            els.gameBox.classList.add('hidden'); els.gameOverBox.classList.remove('hidden');
+        }
+
+        function resetGame() { els.gameOverBox.classList.add('hidden'); els.menuBox.classList.remove('hidden'); }
+        updateInterfaceLanguage();
     </script>
 </body>
 </html>
